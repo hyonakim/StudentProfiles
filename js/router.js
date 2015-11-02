@@ -9,8 +9,8 @@ import {StudentModel} from './resources';
 import {StudentCollection} from './resources';
 
 //Views Templates
-import {AllStudents} from './views/allstudents';
-import {EachStudent} from './views/each_student';
+import {AllStudents} from './views';
+import {EachStudent} from './views';
 
 
 export default Backbone.Router.extend ({
@@ -45,26 +45,22 @@ export default Backbone.Router.extend ({
 
 
   showStudents() {
-    this.students.fetch().then(()=>{this.render(
+    this.students.fetch().then(()=>{
+      this.render(
       <AllStudents 
-      onImageSelect={this.students.toJSON()}  
-      onHomeClick={()=>this.goto('')} 
-      onImageClick={(id)=>this.goto('profile/' + id)} 
-      onModifyClick={()=>this.goto('editstudent')} 
-      onAddClick={()=>this.goto('studentform')}/>
+        onImageSelect={this.students.toJSON()}  
+        onHomeClick={()=>this.goto('')} 
+        onImageClick={(id)=>this.goto(`profile/` + id)} 
+        onModifyClick={()=>this.goto(`editstudent`)} 
+        onAddClick={()=>this.goto(`studentform`)}/>
       );
     });
   },
 
-
   showSpecificStudent (id) {
-    let person = this.students.get(id);
+    let person = this.students.find(person => person.objectId === id);
 
-    if (person) {
-      this.render (
-        <EachStudent/>
-      );
-    }
+    ReactDom.render(<EachStudent src={info.objectId}/>, this.el);
   },
 
 

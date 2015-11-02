@@ -29,7 +29,7 @@ processImage(info) {
     <div className='images' key={info.objectId} onClick={() =>
      this.onImageHandler(data.objectId)}>
 
-    <img src={info.Photo}/>
+    <img src={info.Photo} class='homePics'/>
     </div>
   );
 },

@@ -2025,6 +2025,33 @@ html {
   content: ""; }
 
 body {
-  background: #e2ebf3; }
+  background: #fff; }
+  body .studentDatabase {
+    width: 78%; }
+    body .studentDatabase .images {
+      max-width: 68em;
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-block;
+      width: 22%;
+      margin-bottom: 5%; }
+      body .studentDatabase .images::after {
+        clear: both;
+        content: "";
+        display: table; }
+      body .studentDatabase .images img {
+        display: inline-block;
+        float: left;
+        display: block;
+        margin-right: 2.35765%;
+        width: 91.4702%;
+        border: 1px solid #F5C82D;
+        border-radius: 30px; }
+        body .studentDatabase .images img:last-child {
+          margin-right: 0; }
+        body .studentDatabase .images img:nth-child(1n) {
+          margin-right: 0; }
+        body .studentDatabase .images img:nth-child(1n+1) {
+          clear: left; }
 
 /*# sourceMappingURL=main.css.map */

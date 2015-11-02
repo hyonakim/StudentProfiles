@@ -2,6 +2,29 @@
 @import "neat";
 @import "font-awesome";
 
+
+//cool colors
+$goldColor : #F5C82D;
+
 body {
-  background: #e2ebf3;
+  	background: #fff;
+
+  .studentDatabase {
+    width: 78%;
+
+    .images {
+    	@include outer-container;
+    	display: inline-block;
+    	width: 22%;
+      margin-bottom: 5%;
+
+    img {
+  		display: inline-block;
+  		@include span-columns(11);
+  		@include omega(1n);
+  		border: 1px solid $goldColor;
+  		border-radius: 30px;
+    	}
+    }
+  }
 }

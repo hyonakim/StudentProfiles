@@ -1,15 +1,11 @@
 import React from 'react';
 import $ from 'jquery';
-import eachStudent from './each_student';
+import EachStudent from './each_student';
 
 export default React.createClass({
 
 onHomeHandler() {
   this.props.onHomeClick();
-},
-
-onProfileHandler() {
-  this.props.onImageClick();
 },
 
 onEditHandler() {
@@ -20,16 +16,14 @@ onAddHandler() {
   this.props.onAddClick();
 },
 
-onImageHandler(event) {
-  this.props.onImageClick(event);
+onProfileHandler(id) {
+  this.props.onProfileClick(id);
 },
 
 processImage(info) {
   return (
-    <div className='images' key={info.objectId} onClick={() =>
-     this.onImageHandler(data.objectId)}>
-
-    <img src={info.Photo} class='homePics'/>
+    <div className='images' key={info.objectId}>
+    <img src={info.Photo} id={info.objectId} onClick={() => this.onProfileHandler(info.objectId)}/>
     </div>
   );
 },
@@ -37,7 +31,6 @@ processImage(info) {
 render() {
   return (
     <div className='wholePage'>
-    <div className='logo'><img src='../../app/images/masan.png'/></div>
       <nav className='navBar'>
         <ul>
           <li onClick={() => this.onHomeHandler()}>Students</li>
@@ -48,7 +41,7 @@ render() {
       </nav>
 
       <div className='studentDatabase'>
-        {this.props.onImageSelect.map(this.processImage)}
+        {this.props.info.map(this.processImage)}
       </div>
 
     </div>

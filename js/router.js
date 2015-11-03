@@ -17,8 +17,8 @@ export default Backbone.Router.extend ({
 
 	routes: {
 
-		''            : 'showStudents',
-		'student:id' 	: 'showSpecificStudent',
+		''            : 'showHome',
+		'student/:id' : 'showSpecificStudent',
 		'editstudent' : 'modifyStudent',
 		'studentform' : 'addNewStudent'
 	},
@@ -44,23 +44,39 @@ export default Backbone.Router.extend ({
   },
 
 
-  showStudents() {
+  showHome() {
     this.students.fetch().then(()=>{
       this.render(
       <AllStudents 
-        onImageSelect={this.students.toJSON()}  
+        id={this.students.objectId}
+        info={this.students.toJSON()} 
         onHomeClick={()=>this.goto('')} 
-        onImageClick={(id)=>this.goto(`profile/` + id)} 
+        onProfileClick={(id)=>this.goto(`student/` + id)}
         onModifyClick={()=>this.goto(`editstudent`)} 
         onAddClick={()=>this.goto(`studentform`)}/>
+     
       );
     });
   },
 
   showSpecificStudent (id) {
-    let person = this.students.find(person => person.objectId === id);
+    let student = this.students.get(id);
 
-    ReactDom.render(<EachStudent src={info.objectId}/>, this.el);
+    if (student) {
+      this.render(
+        <EachStudent
+          details={student.toJSON()}/>
+        );
+    }
+    else {
+      student = this.students.add(id);
+      student.fetch().then(()=> {
+        this.render(
+          <EachStudent
+          details={student.toJSON()}/>
+        );
+      });
+    }
   },
 
 
@@ -69,9 +85,7 @@ export default Backbone.Router.extend ({
   },
 
 
-  addNewStudent () {
-
-  },
+ 
 
 
   start () {

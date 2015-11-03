@@ -170,8 +170,8 @@ exports['default'] = _backbone2['default'].Router.extend({
 
   routes: {
 
-    '': 'showStudents',
-    'student:id': 'showSpecificStudent',
+    '': 'showHome',
+    'student/:id': 'showSpecificStudent',
     'editstudent': 'modifyStudent',
     'studentform': 'addNewStudent'
   },
@@ -193,17 +193,18 @@ exports['default'] = _backbone2['default'].Router.extend({
     _reactDom2['default'].render(component, this.el);
   },
 
-  showStudents: function showStudents() {
+  showHome: function showHome() {
     var _this = this;
 
     this.students.fetch().then(function () {
       _this.render(_react2['default'].createElement(_views.AllStudents, {
-        onImageSelect: _this.students.toJSON(),
+        id: _this.students.objectId,
+        info: _this.students.toJSON(),
         onHomeClick: function () {
           return _this.goto('');
         },
-        onImageClick: function (id) {
-          return _this.goto('profile/' + id);
+        onProfileClick: function (id) {
+          return _this.goto('student/' + id);
         },
         onModifyClick: function () {
           return _this.goto('editstudent');
@@ -215,16 +216,23 @@ exports['default'] = _backbone2['default'].Router.extend({
   },
 
   showSpecificStudent: function showSpecificStudent(id) {
-    var person = this.students.find(function (person) {
-      return person.objectId === id;
-    });
+    var _this2 = this;
 
-    _reactDom2['default'].render(_react2['default'].createElement(_views.EachStudent, { src: info.objectId }), this.el);
+    var student = this.students.get(id);
+
+    if (student) {
+      this.render(_react2['default'].createElement(_views.EachStudent, {
+        details: student.toJSON() }));
+    } else {
+      student = this.students.add(id);
+      student.fetch().then(function () {
+        _this2.render(_react2['default'].createElement(_views.EachStudent, {
+          details: student.toJSON() }));
+      });
+    }
   },
 
   modifyStudent: function modifyStudent() {},
-
-  addNewStudent: function addNewStudent() {},
 
   start: function start() {
     _backbone2['default'].history.start();
@@ -261,10 +269,6 @@ exports['default'] = _react2['default'].createClass({
     this.props.onHomeClick();
   },
 
-  onProfileHandler: function onProfileHandler() {
-    this.props.onImageClick();
-  },
-
   onEditHandler: function onEditHandler() {
     this.props.onModifyClick();
   },
@@ -273,8 +277,8 @@ exports['default'] = _react2['default'].createClass({
     this.props.onAddClick();
   },
 
-  onImageHandler: function onImageHandler(event) {
-    this.props.onImageClick(event);
+  onProfileHandler: function onProfileHandler(id) {
+    this.props.onProfileClick(id);
   },
 
   processImage: function processImage(info) {
@@ -282,10 +286,10 @@ exports['default'] = _react2['default'].createClass({
 
     return _react2['default'].createElement(
       'div',
-      { className: 'images', key: info.objectId, onClick: function () {
-          return _this.onImageHandler(data.objectId);
-        } },
-      _react2['default'].createElement('img', { src: info.Photo, 'class': 'homePics' })
+      { className: 'images', key: info.objectId },
+      _react2['default'].createElement('img', { src: info.Photo, id: info.objectId, onClick: function () {
+          return _this.onProfileHandler(info.objectId);
+        } })
     );
   },
 
@@ -295,11 +299,6 @@ exports['default'] = _react2['default'].createClass({
     return _react2['default'].createElement(
       'div',
       { className: 'wholePage' },
-      _react2['default'].createElement(
-        'div',
-        { className: 'logo' },
-        _react2['default'].createElement('img', { src: '../../app/images/masan.png' })
-      ),
       _react2['default'].createElement(
         'nav',
         { className: 'navBar' },
@@ -339,7 +338,7 @@ exports['default'] = _react2['default'].createClass({
       _react2['default'].createElement(
         'div',
         { className: 'studentDatabase' },
-        this.props.onImageSelect.map(this.processImage)
+        this.props.info.map(this.processImage)
       )
     );
   }
@@ -363,9 +362,36 @@ var _react2 = _interopRequireDefault(_react);
 exports['default'] = _react2['default'].createClass({
   displayName: 'each_student',
 
-  processStudent: function processStudent(details) {
-    var onStudentSelect = this.props.onStudentSelect();
+  render: function render() {
+    return _react2['default'].createElement(
+      'div',
+      { className: 'details', id: this.props.details.id },
+      _react2['default'].createElement('img', { src: this.props.details.Photo, className: 'studentImage' }),
+      _react2['default'].createElement(
+        'h3',
+        null,
+        this.props.details.FirstName,
+        ' ',
+        this.props.details.LastName
+      ),
+      _react2['default'].createElement(
+        'span',
+        null,
+        this.props.details.StudentAge
+      ),
+      _react2['default'].createElement(
+        'p',
+        null,
+        this.props.details.SpecialSkill
+      ),
+      _react2['default'].createElement(
+        'p',
+        null,
+        this.props.details.Weapon
+      )
+    );
   }
+
 });
 module.exports = exports['default'];
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 import EachStudent from './each_student';
+import Navigation from './nav';
+
 
 export default React.createClass({
 
@@ -28,20 +30,20 @@ processImage(info) {
   );
 },
 
+navigateHandler(route) {
+
+  this.props.onNavigate(route);
+
+},
+
 render() {
   return (
     <div className='wholePage'>
-      <nav className='navBar'>
-        <ul>
-          <li onClick={() => this.onHomeHandler()}>Students</li>
-          <li onClick={() => this.onProfileHandler()}>Profiles</li>
-          <li onClick={() => this.onEditHandler()}>Edit</li>
-          <li onClick={() => this.onAddHandler()}>Add</li>
-        </ul>
-      </nav>
-
       <div className='studentDatabase'>
+      <Navigation onNavigate={this.navigateHandler}/>
+      <button onClick={this.onAddHandler} className='addBtn'>Add</button>
         {this.props.info.map(this.processImage)}
+      }
       </div>
 
     </div>
@@ -49,3 +51,4 @@ render() {
 }
 
 });
+

@@ -11,6 +11,7 @@ import {StudentCollection} from './resources';
 //Views Templates
 import {AllStudents} from './views';
 import {EachStudent} from './views';
+import {AddStudent} from './views';
 
 
 export default Backbone.Router.extend ({
@@ -27,7 +28,6 @@ export default Backbone.Router.extend ({
   initialize(appElement) {
     this.el = appElement;
     this.students = new StudentCollection();
-
     let router = this;
   },
 
@@ -79,6 +79,38 @@ export default Backbone.Router.extend ({
     }
   },
 
+  addNewStudent() {
+    this.render(
+      <AddStudent 
+       info={ this.students.toJSON()}
+       submitClick={() => {
+        let image = document.querySelector('#profileImg').value;
+        let firstName = document.querySelector('#firstname').value;
+        let lastName  = document.querySelector('#lastname').value;
+        let age       = document.querySelector('#age').value;
+        let gradeLevel= document.querySelector('#gradelevel').value;
+        let gpa       = document.querySelector('#gpa').value;
+        let skill     = document.querySelector('#skill').value;
+        let weapon    = document.querySelector('#weapon').value;
+
+        let newStudent = new EachStudent({
+        Photo: image,  
+        FirstName: firstName,
+        LastName: lastName,
+        Age: age,
+        GradeLevel: gradeLevel,
+        GPA: gpa,
+        SpecialSkill: skill,
+        Weapon: weapon 
+     });
+
+        newStudent.save().then(() => {
+          alert('Add new student to Masan High?');
+          this.goto('');
+        });
+      }
+     }/>); 
+  },
 
   modifyStudent () {
 

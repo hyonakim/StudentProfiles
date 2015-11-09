@@ -43,7 +43,6 @@ render() {
       <Navigation onNavigate={this.navigateHandler}/>
       <button onClick={this.onAddHandler} className='addBtn'>Add</button>
         {this.props.info.map(this.processImage)}
-      }
       </div>
 
     </div>

@@ -5,27 +5,26 @@ export default React.createClass({
 
 
 	
-  SubmitClickHandler() {
+  SubmitClickHandler(event) {
+    event.preventDefault();
     this.props.submitClick();
-  },
-  
-  navigateHandler(route) {
-    this.props.onNavigate(route);
   },
 
   render() {
 		return (
-    <form className='formtemplate'>
-      <input type='image' placeholder='Upload Image' id='profileImg' className='input' />
-      <input type="firstName" placeholder='First Name' id='firstname' className='input' />
-      <input type="lastName" placeholder='Last Name' id='lastname' className='input' />
-      <input type='age' placeholder='Age' id='age' className='input' />
-      <input type="gradelevel" placeholder='Grade Level' id='gradelevel' className='input' />
-      <input type='gpa' placeholder='GPA' id='gpa' className='input' />
-      <input type='specialSkill' placeholder='Special Skill' id='skill' className='input' />
-      <input type='weapon' placeholder='Weapon of Choice' id='weapon' className='input' />
-      <button onClick={this.SubmitClickHandler} className='createStudent'>Add Student</button>
-    </form>
+      <div>
+        <form className='formtemplate'>
+          <input type='text' placeholder='Image Link' className='profilePic input' />
+          <input type="firstName" placeholder='First Name' className='firstname input' />
+          <input type="lastName" placeholder='Last Name' className='lastname input' />
+          <input type='age' placeholder='Age' className='age input' />
+          <input type="gradelevel" placeholder='Grade Level' className='gradelevel input' />
+          <input type='gpa' placeholder='GPA' className='gpa input' />
+          <input type='specialSkill' placeholder='Special Skill' className='skill input' />
+          <input type='weapon' placeholder='Weapon of Choice' className='weapon input' />
+          <button onClick={this.SubmitClickHandler} className='createStudent'>Add Student</button>
+        </form>
+    </div>
     );
 	}
 });

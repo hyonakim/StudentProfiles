@@ -237,17 +237,17 @@ exports['default'] = _backbone2['default'].Router.extend({
     this.render(_react2['default'].createElement(_views.AddStudent, {
       info: this.students.toJSON(),
       submitClick: function () {
-        var image = document.querySelector('#profileImg').value;
-        var firstName = document.querySelector('#firstname').value;
-        var lastName = document.querySelector('#lastname').value;
-        var age = document.querySelector('#age').value;
-        var gradeLevel = document.querySelector('#gradelevel').value;
-        var gpa = document.querySelector('#gpa').value;
-        var skill = document.querySelector('#skill').value;
-        var weapon = document.querySelector('#weapon').value;
+        var photo = document.querySelector('.profilePic').value;
+        var firstName = document.querySelector('.firstname').value;
+        var lastName = document.querySelector('.lastname').value;
+        var age = document.querySelector('.age').value;
+        var gradeLevel = document.querySelector('.gradelevel').value;
+        var gpa = document.querySelector('.gpa').value;
+        var skill = document.querySelector('.skill').value;
+        var weapon = document.querySelector('.weapon').value;
 
-        var newStudent = new _views.EachStudent({
-          Photo: image,
+        var newStudent = new _resources.StudentModel({
+          Photo: photo,
           FirstName: firstName,
           LastName: lastName,
           Age: age,
@@ -293,30 +293,31 @@ var _nav2 = _interopRequireDefault(_nav);
 exports['default'] = _react2['default'].createClass({
   displayName: 'add_new',
 
-  SubmitClickHandler: function SubmitClickHandler() {
+  SubmitClickHandler: function SubmitClickHandler(event) {
+    event.preventDefault();
     this.props.submitClick();
-  },
-
-  navigateHandler: function navigateHandler(route) {
-    this.props.onNavigate(route);
   },
 
   render: function render() {
     return _react2['default'].createElement(
-      'form',
-      { className: 'formtemplate' },
-      _react2['default'].createElement('input', { type: 'image', placeholder: 'Upload Image', id: 'profileImg', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'firstName', placeholder: 'First Name', id: 'firstname', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'lastName', placeholder: 'Last Name', id: 'lastname', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'age', placeholder: 'Age', id: 'age', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'gradelevel', placeholder: 'Grade Level', id: 'gradelevel', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'gpa', placeholder: 'GPA', id: 'gpa', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'specialSkill', placeholder: 'Special Skill', id: 'skill', className: 'input' }),
-      _react2['default'].createElement('input', { type: 'weapon', placeholder: 'Weapon of Choice', id: 'weapon', className: 'input' }),
+      'div',
+      null,
       _react2['default'].createElement(
-        'button',
-        { onClick: this.SubmitClickHandler, className: 'createStudent' },
-        'Add Student'
+        'form',
+        { className: 'formtemplate' },
+        _react2['default'].createElement('input', { type: 'text', placeholder: 'Image Link', className: 'profilePic input' }),
+        _react2['default'].createElement('input', { type: 'firstName', placeholder: 'First Name', className: 'firstname input' }),
+        _react2['default'].createElement('input', { type: 'lastName', placeholder: 'Last Name', className: 'lastname input' }),
+        _react2['default'].createElement('input', { type: 'age', placeholder: 'Age', className: 'age input' }),
+        _react2['default'].createElement('input', { type: 'gradelevel', placeholder: 'Grade Level', className: 'gradelevel input' }),
+        _react2['default'].createElement('input', { type: 'gpa', placeholder: 'GPA', className: 'gpa input' }),
+        _react2['default'].createElement('input', { type: 'specialSkill', placeholder: 'Special Skill', className: 'skill input' }),
+        _react2['default'].createElement('input', { type: 'weapon', placeholder: 'Weapon of Choice', className: 'weapon input' }),
+        _react2['default'].createElement(
+          'button',
+          { onClick: this.SubmitClickHandler, className: 'createStudent' },
+          'Add Student'
+        )
       )
     );
   }
@@ -397,8 +398,7 @@ exports['default'] = _react2['default'].createClass({
           { onClick: this.onAddHandler, className: 'addBtn' },
           'Add'
         ),
-        this.props.info.map(this.processImage),
-        '}'
+        this.props.info.map(this.processImage)
       )
     );
   }

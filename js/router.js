@@ -82,19 +82,19 @@ export default Backbone.Router.extend ({
   addNewStudent() {
     this.render(
       <AddStudent 
-       info={ this.students.toJSON()}
+       info={this.students.toJSON()}
        submitClick={() => {
-        let image = document.querySelector('#profileImg').value;
-        let firstName = document.querySelector('#firstname').value;
-        let lastName  = document.querySelector('#lastname').value;
-        let age       = document.querySelector('#age').value;
-        let gradeLevel= document.querySelector('#gradelevel').value;
-        let gpa       = document.querySelector('#gpa').value;
-        let skill     = document.querySelector('#skill').value;
-        let weapon    = document.querySelector('#weapon').value;
+        let photo = document.querySelector('.profilePic').value;
+        let firstName = document.querySelector('.firstname').value;
+        let lastName  = document.querySelector('.lastname').value;
+        let age       = document.querySelector('.age').value;
+        let gradeLevel= document.querySelector('.gradelevel').value;
+        let gpa       = document.querySelector('.gpa').value;
+        let skill     = document.querySelector('.skill').value;
+        let weapon    = document.querySelector('.weapon').value;
 
-        let newStudent = new EachStudent({
-        Photo: image,  
+        let newStudent = new StudentModel({ 
+        Photo: photo,
         FirstName: firstName,
         LastName: lastName,
         Age: age,

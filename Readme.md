@@ -1,7 +1,13 @@
-## Welcome to My Project
+## Masan Student Database - Add or Edit a student out of the school's database. 
 
-> I am your Readme.md file, you should probably update me.
+> Deployment: http://masan-studentdatabase.surge.sh
 
+## Programming Languages Used:
+- HTML
+- SASS
+- Javascript
+- Backbone JS
+- React JS
 
 ## Usage
 

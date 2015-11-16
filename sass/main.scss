@@ -7,10 +7,22 @@
 $goldColor : #F5C82D;
 
 body {
-  	background: #fff;
+  	background: $goldColor;
 
   .studentDatabase {
     width: 78%;
+    margin-left: 15%;
+
+    .addBtn {
+      position: absolute;
+      top: 2%;
+      left: 78%;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      color: #fff;
+      background: #000;
+    }
 
     .images {
     	@include outer-container;

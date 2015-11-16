@@ -40,11 +40,10 @@ render() {
   return (
     <div className='wholePage'>
       <div className='studentDatabase'>
-      <Navigation onNavigate={this.navigateHandler}/>
+      <h2 className='schoolTitle'>Masan High Student Database</h2>
       <button onClick={this.onAddHandler} className='addBtn'>Add</button>
         {this.props.info.map(this.processImage)}
       </div>
-
     </div>
   );
 }

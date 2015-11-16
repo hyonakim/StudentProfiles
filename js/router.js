@@ -12,6 +12,7 @@ import {StudentCollection} from './resources';
 import {AllStudents} from './views';
 import {EachStudent} from './views';
 import {AddStudent} from './views';
+import {EditStudent}  from './views';
 
 
 export default Backbone.Router.extend ({
@@ -20,7 +21,7 @@ export default Backbone.Router.extend ({
 
 		''            : 'showHome',
 		'student/:id' : 'showSpecificStudent',
-		'editstudent' : 'modifyStudent',
+		'editstudent/:id' : 'modifyStudent',
 		'studentform' : 'addNewStudent'
 	},
 
@@ -65,7 +66,8 @@ export default Backbone.Router.extend ({
     if (student) {
       this.render(
         <EachStudent
-          details={student.toJSON()}/>
+          details={student.toJSON()}
+          onEachStudentClick={() => this.goto(`editstudent/` + id)}/>
         );
     }
     else {
@@ -73,7 +75,8 @@ export default Backbone.Router.extend ({
       student.fetch().then(()=> {
         this.render(
           <EachStudent
-          details={student.toJSON()}/>
+          details={student.toJSON()}
+          onEachStudentClick={() => this.goto(`editstudent/` + id)}/>
         );
       });
     }
@@ -97,9 +100,9 @@ export default Backbone.Router.extend ({
         Photo: photo,
         FirstName: firstName,
         LastName: lastName,
-        Age: age,
+        StudentAge: age,
         GradeLevel: gradeLevel,
-        GPA: gpa,
+        StudentGPA: gpa,
         SpecialSkill: skill,
         Weapon: weapon 
      });
@@ -112,8 +115,57 @@ export default Backbone.Router.extend ({
      }/>); 
   },
 
-  modifyStudent () {
 
+//EDIT DATA TEMPLATE
+
+  modifyStudent (id) {
+    let information = this.students.get(id);
+
+    if(information) {
+    this.render(
+      <EditStudent
+      info = {information.toJSON()}
+      onEditStudentClick={(id, Photo, FirstName, LastName, StudentAge, GradeLevel, StudentGPA, SpecialSkill, Weapon) => {
+        this.saveInfo(id, Photo, FirstName, LastName, StudentAge, GradeLevel, StudentGPA, SpecialSkill, Weapon);}}/>);  
+    }
+    else {
+    information = this.students.add({objectId: id}); 
+    information.fetch().then( () => {   
+    this.render(
+      <EditStudent
+      info = {information.toJSON()}
+      onEditStudentClick={(id, Photo, FirstName, LastName, StudentAge, GradeLevel, StudentGPA, SpecialSkill, Weapon) => {
+        this.saveInfo(id, Photo, FirstName, LastName, StudentAge, GradeLevel, StudentGPA, SpecialSkill, Weapon);}}/>);  
+      });
+    }                                                                  
+  },
+//SAVE EDITED DATA FUNCTION
+  saveInfo(id, Photo, FirstName, LastName, StudentAge, GradeLevel, StudentGPA, SpecialSkill, Weapon) {
+    
+    var data = {
+      objectId: id, 
+      Photo: Photo,
+      FirstName: FirstName,
+      LastName: LastName,
+      StudentAge: StudentAge,
+      GradeLevel: GradeLevel,
+      StudentGPA: StudentGPA,
+      SpecialSkill: SpecialSkill,
+      Weapon: Weapon
+    };
+    
+    var student = this.students.get(id);
+
+    if (!student) {
+      student = new StudentModel({objectId: id});
+    }
+
+    console.log('saving data', data);
+    console.log('saving to url:', student.url());
+
+    student.save(data).then(() => {
+      this.goto('');
+    });
   },
 
 

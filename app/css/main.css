@@ -2025,9 +2025,19 @@ html {
   content: ""; }
 
 body {
-  background: #fff; }
+  background: #F5C82D; }
   body .studentDatabase {
-    width: 78%; }
+    width: 78%;
+    margin-left: 15%; }
+    body .studentDatabase .addBtn {
+      position: absolute;
+      top: 2%;
+      left: 78%;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      color: #fff;
+      background: #000; }
     body .studentDatabase .images {
       max-width: 68em;
       margin-left: auto;

@@ -2,8 +2,6 @@ import React from 'react';
 import Navigation from './nav';
 
 export default React.createClass({
-
-
 	
   SubmitClickHandler(event) {
     event.preventDefault();
